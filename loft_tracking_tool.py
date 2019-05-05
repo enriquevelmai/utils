@@ -73,6 +73,11 @@ def execute_loft_tracking(first_edge_field, second_edge_field, value_field):
     second_edge_raw = mc.textField(second_edge_field, q=True, text=True)
     value = float(mc.floatField(value_field, q=True, value=True))
 
+    # run logic
+    loft_tracking_logic(first_edge_raw, second_edge_raw, value)
+
+
+def loft_tracking_logic(first_edge_raw, second_edge_raw, value):
     # get data as needed
     first_mesh = str(first_edge_raw.split('.')[0])
     first_edge_number = int(first_edge_raw.split('[')[1].split(']')[0])
