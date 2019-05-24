@@ -1,6 +1,11 @@
 import maya.cmds as mc
 
+# define node type, by default it's file
 node_type = "file"
+
+# define mapping dict,
+# "key" represents the previous color space ,non aces
+# "value" represents de post color space, aces
 mapping_types = {"srgb": "Utility - sRGB - Texture",
                  "raw": "Utility - Raw"}
 
