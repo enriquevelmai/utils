@@ -23,6 +23,6 @@ def copy():
 
 #################################
 # USAGE !
-# First select the source, the all the destiny meshes
+# First select the source, then all the destiny meshes
 # copy()
 #################################
