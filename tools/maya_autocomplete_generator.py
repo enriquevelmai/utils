@@ -39,9 +39,9 @@ TYPE_MAPPER = {
     "time": "int()"  # could be an string as well
 }
 
-
 # globals
 DOWNLOAD_LINK = "http://download.autodesk.com/us/support/maya_2019.2/maya-2019.2-user-guide_enu_offline.zip"
+DOWNLOAD_DEVKIT_LINK = "https://autodesk-adn-transfer.s3-us-west-2.amazonaws.com/ADN+Extranet/M%26E/Maya/devkit+2020/Autodesk_Maya_2020_DEVKIT_Windows.zip"
 DOWNLOAD_PATH = os.path.join(os.environ["USERPROFILE"], "Downloads")
 COMPLETION_CREATION_PATH = os.path.join(os.environ["USERPROFILE"], "Documents")
 
