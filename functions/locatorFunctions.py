@@ -19,3 +19,12 @@ def follow_locators_from_curve(curve_name):
         mc.connectAttr("{}.worldSpace[0]".format(curve_name), "{}.inputCurve".format(pci))
         mc.setAttr("{}.parameter".format(pci), parameter)
         mc.connectAttr("{}.position".format(pci), "{}.translate".format(loc_trn))
+
+
+def place_at_object(slave, target):
+    matrix = mc.getAttr(target + '.worldMatrix')
+    mc.xform(slave, m=matrix, ws=True)
+
+
+def mesh_independent_rivets():
+    raise NotImplementedError

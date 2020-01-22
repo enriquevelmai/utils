@@ -3610,9 +3610,6 @@ def lassoContext(drawClosed=bool(), dc=bool(), exists=bool(), ex=bool(), history
 
 
 def dbtrace(filter=str(), f=str(), info=bool(), i=bool(), keyword=str(), k=str(), mark=bool(), m=bool(), off=bool(),
-            = bool(),
-
-
     output = str(), o = str(), timed = bool(), tm = bool(), title = str(), t = str(), verbose = bool(), v = bool(), *args, ** keywords): pass
 
 
