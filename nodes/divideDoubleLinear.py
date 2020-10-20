@@ -24,7 +24,7 @@ class divideDoubleLinear(OpenMayaMPx.MPxNode):
             in2_value = dataBlock.inputValue(divideDoubleLinear.in2).asFloat()
 
             if in2_value == 0:
-                sys.stderr.write("Dude, are you trying to divide by 0. You aready know that answer")
+                sys.stderr.write("Dude, are you trying to divide by 0. You already know that answer")
                 raise BaseException()
             out = in1_value / float(in2_value)
             output_handle = dataBlock.outputValue(divideDoubleLinear.output)
