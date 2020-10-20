@@ -25,7 +25,7 @@ class divideDoubleLinear(OpenMayaMPx.MPxNode):
 
             if in2_value == 0:
                 sys.stderr.write("Dude, are you trying to divide by 0. You aready know that answer")
-                raise
+                raise BaseException()
             out = in1_value / float(in2_value)
             output_handle = dataBlock.outputValue(divideDoubleLinear.output)
             output_handle.setFloat(out)
@@ -45,12 +45,10 @@ def nodeInitializer():
     n_attr1 = OpenMaya.MFnNumericAttribute()
     divideDoubleLinear.in1 = n_attr1.create("input1", "in1", OpenMaya.MFnNumericData.kFloat, 1.0)
     n_attr1.setStorable(True)
-    n_attr1 = OpenMaya.MFnNumericAttribute()
     n_attr1.setKeyable(True)
     n_attr2 = OpenMaya.MFnNumericAttribute()
     divideDoubleLinear.in2 = n_attr2.create("input2", "in2", OpenMaya.MFnNumericData.kFloat, 1.0)
     n_attr2.setStorable(True)
-    n_attr2 = OpenMaya.MFnNumericAttribute()
     n_attr2.setKeyable(True)
 
     # Output
@@ -65,7 +63,8 @@ def nodeInitializer():
     divideDoubleLinear.addAttribute(divideDoubleLinear.in2)
     divideDoubleLinear.addAttribute(divideDoubleLinear.output)
 
-    divideDoubleLinear.attributeAffects(divideDoubleLinear.in1, divideDoubleLinear.in2, divideDoubleLinear.output)
+    divideDoubleLinear.attributeAffects(divideDoubleLinear.in1, divideDoubleLinear.output)
+    divideDoubleLinear.attributeAffects(divideDoubleLinear.in2, divideDoubleLinear.output)
 
 
 # Initialize the scripted plug-in
