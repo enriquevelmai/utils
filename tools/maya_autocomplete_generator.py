@@ -1,5 +1,6 @@
 # CREATES THE AUTOCOMPLETE FOR MAYA CMDS module, it's need to have the maya.cmds devkit autocomplete in order to get a
 # Full list with the commands and do not have some of them lost
+
 # module imports
 import maya.cmds as mc
 import os
