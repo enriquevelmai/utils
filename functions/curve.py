@@ -55,7 +55,7 @@ def get_center_edge(geo):
 
 
 def edge_to_curve(edge):
-    mc.select(center_edge)
+    mc.select(edge)
     mm.eval("polyToCurve -form 2 -degree 3 -conformToSmoothMeshPreview 1;")
     crv = mc.ls(sl=True)[0]
     real_name = mc.rename(crv, edge[0].split('.')[0].replace('GEO', 'CRV'))
