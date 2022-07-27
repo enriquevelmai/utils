@@ -10,6 +10,7 @@ def create_blendshape_splitter_setup(base_mesh, target_meshes):
         - The base mesh and all target meshes MUST have the SAME vertex number and the SAME topology. This tool does not
         check if the meshes have same topology nor vertex number. It is an assumption that it is made. The blendshape
         creation will stop the execution of this code.
+        - It uses maya 2022 nodes so it ONLY works in maya 2022
 
     :param: base_mesh (str): Name of the transform of the mesh to use as a base
     :param: target_meshes (list of str): Names of the transforms to use as the targets
