@@ -37,6 +37,8 @@ class MyDefomer(ommpx.MPxDeformerNode):
         # example to iterate the geometry
         geo_iter.reset()
         while not geo_iter.isDone():
+            # get the painted weight of the component of the geometry
+            source_weight = self.weightValue(data_block, multi_index, geo_iter.index())
             geo_iter.next()
 
     @classmethod
@@ -45,7 +47,28 @@ class MyDefomer(ommpx.MPxDeformerNode):
 
     @classmethod
     def initialize(cls):
-        pass
+        """
+        Method that runs when loading the deformer node. This is the function where to create custom attributes
+        """
+
+        # create how we want the attributes
+        typed_attr = om.MFnTypedAttribute()
+        cls.target_mesh = typed_attr.create("targetMesh", "tMesh", om.MFnData.kMesh)
+
+        numeric_attr = om.MFnNumericAttribute()
+        cls.target_weight = numeric_attr.create("targetWeight", "tWeight", om.MFnNumericData.kFloat, 0.0)
+        numeric_attr.setKeyable(True)
+        numeric_attr.setMin(0.0)
+        numeric_attr.setMax(1.0)
+
+        # specify the adding order
+        cls.addAttribute(cls.target_mesh)
+        cls.addAttribute(cls.target_weight)
+
+        # set which attributes affect the out mesh
+        output_geom = ommpx.cvar.MPxGeometryFilter_outputGeom
+        cls.attributeAffects(cls.target_mesh, output_geom)
+        cls.attributeAffects(cls.target_weight, output_geom)
 
 
 def initializePlugin(plugin):
@@ -56,8 +79,14 @@ def initializePlugin(plugin):
     except:
         om.MGlobal.displayError("Failed to register node: " + MyDefomer.NODENAME)
 
+    # run the mc command in order to be able to paint weights in the defomer node
+    mc.makePaintable(MyDefomer.NODENAME, "weights", attrType="multiFloat", shapeMode="deformer")
 
 def uninitializePlugin(plugin):
+    # notice make paintable saves the entries in the user preferences so make sure we remove them when uninitializing
+    # the plugin
+    mc.makePaintable(MyDefomer.NODENAME, "weights", remove=True)
+
     plugin_fn = ommpx.MFnPlugin(plugin)
     try:
         plugin_fn.deregisterNode(MyDefomer.NODEID)
