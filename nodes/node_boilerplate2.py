@@ -72,6 +72,10 @@ class MyNode(om.MPxNode):
             - hidden: Attribute hidden from the UI. They are not connectable. Defaults to False
             - array: Attribute supports an array as an input. Defaults to False
 
+        In order to set ICONS to the node. There should be an image inside a MAYA_IMAGE_PATH with the name of the node.
+            - For the node editor should be an image of 80x80 px under the name of myNode.png
+            - For the outliner should be an image of 40x40 px with the prefix 'out_' under the name of out_myNode.png
+
         """
         # Input
         n_attr = om.MFnNumericAttribute()
