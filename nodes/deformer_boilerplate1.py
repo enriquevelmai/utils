@@ -1,11 +1,8 @@
-import sys
-
 # as deformers cannot be writen in Maya Python API 2.0 we will keep our code pure in API 1.0 due to the fact that
 # their objects are not compatible. This will allow us to have an easier port to C++ code once the deformer prototype
 # is finished
 import maya.OpenMaya as om
 import maya.OpenMayaMPx as ommpx
-import maya.cmds as mc
 
 
 # Class definition
@@ -13,8 +10,8 @@ class MyDefomer(ommpx.MPxDeformerNode):
     # Node definition
     VENDOR = 'Kike'
     VERSION = '1.0'
-    NODENAME = 'theDeformer'
-    NODEID = om.MTypeId(0x00118383)
+    NODE_NAME = 'theDeformer'
+    NODE_ID = om.MTypeId(0x00118383)
 
     def __init__(self):
         super(MyDefomer, self).__init__()
@@ -75,30 +72,34 @@ def initializePlugin(plugin):
     plugin_fn = ommpx.MFnPlugin(plugin, MyDefomer.VENDOR, MyDefomer.VERSION)
     try:
         plugin_fn.registerNode(
-            MyDefomer.NODENAME, MyDefomer.NODEID, MyDefomer.creator, MyDefomer.initialize, ommpx.MPxNode.kDeformerNode)
+            MyDefomer.NODE_NAME, MyDefomer.NODE_ID, MyDefomer.creator, MyDefomer.initialize,
+            ommpx.MPxNode.kDeformerNode)
     except:
-        om.MGlobal.displayError("Failed to register node: " + MyDefomer.NODENAME)
+        om.MGlobal.displayError("Failed to register node: " + MyDefomer.NODE_NAME)
 
     # run the mc command in order to be able to paint weights in the defomer node
-    mc.makePaintable(MyDefomer.NODENAME, "weights", attrType="multiFloat", shapeMode="deformer")
+    mc.makePaintable(MyDefomer.NODE_NAME, "weights", attrType="multiFloat", shapeMode="deformer")
+
 
 def uninitializePlugin(plugin):
     # notice make paintable saves the entries in the user preferences so make sure we remove them when uninitializing
     # the plugin
-    mc.makePaintable(MyDefomer.NODENAME, "weights", remove=True)
+    mc.makePaintable(MyDefomer.NODE_NAME, "weights", remove=True)
 
     plugin_fn = ommpx.MFnPlugin(plugin)
     try:
-        plugin_fn.deregisterNode(MyDefomer.NODEID)
+        plugin_fn.deregisterNode(MyDefomer.NODE_ID)
     except:
-        om.MGlobal.displayError("Failed to deregister node: " + MyDefomer.NODENAME)
+        om.MGlobal.displayError("Failed to deregister node: " + MyDefomer.NODE_NAME)
 
 
 if __name__ == '__main__':
     """
     Just development 
     """
-    plugin_file_name = "deformer_boilerplate.py"
+    import maya.cmds as mc
+
+    plugin_file_name = "deformer_boilerplate1.py"
 
     # a new scene is need because there mustn't be any created node when uninitialized the plugin
     mc.file(new=True, force=True)
@@ -111,4 +112,4 @@ if __name__ == '__main__':
 
     # add a simply set up to test the defomer
     test_ply = mc.polySphere(name="C_test_PLY", constructionHistory=False)
-    my_deformer = mc.deformer(test_ply, type=MyDefomer.NODENAME)
+    my_deformer = mc.deformer(test_ply, type=MyDefomer.NODE_NAME)

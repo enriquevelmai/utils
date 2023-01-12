@@ -5,9 +5,6 @@ into L/R sided in the outputLMeshes[]/outputRMeshes[] mesh array attributes
 The separation map could be shown in the option is set to false.
 The blend range could be set with the blendable float attribute the node.
 """
-
-import sys
-
 # as there is no maya.OpenMaya import, there is no need to specify which is the API version
 import maya.api.OpenMaya as om
 
@@ -68,7 +65,7 @@ class BlendShapeSplitter(om.MPxNode):
 
             input_mesh_vtx_count = om.MFnMesh(input_mesh_handler.asMesh()).numVertices
             if self.base_mesh_vtx_count != input_mesh_vtx_count:
-                sys.stderr.write(
+                om.MGlobal.displayError(
                     "The inputMesh {} does not have the same vtx than the base mesh. Unable to evaluate {}\n".format(
                         mesh_index, plug))
                 data.setClean(plug)
@@ -226,7 +223,7 @@ def initializePlugin(mobject):
             BlendShapeSplitter.nodeCreator,
             BlendShapeSplitter.initialize)
     except Exception:
-        sys.stderr.write("Failed to register node: " + BlendShapeSplitter.NODENAME)
+        om.MGlobal.displayError("Failed to register node: " + BlendShapeSplitter.NODENAME)
         raise
 
 
@@ -236,5 +233,5 @@ def uninitializePlugin(mobject):
     try:
         mplugin.deregisterNode(BlendShapeSplitter.NODEID)
     except Exception:
-        sys.stderr.write("Failed to deregister node: " + BlendShapeSplitter.NODENAME)
+        om.MGlobal.displayError("Failed to deregister node: " + BlendShapeSplitter.NODENAME)
         raise
